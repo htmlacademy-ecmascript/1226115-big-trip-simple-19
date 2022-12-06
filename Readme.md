@@ -1,7 +1,7 @@
 # Проект «Большое путешествие (простой)»
 
-* Студент: [Константин Ткачев](https://up.htmlacademy.ru/ecmascript/19/user/1226115).
-* Наставник: `Неизвестно`.
+- Студент: [Константин Ткачев](https://up.htmlacademy.ru/ecmascript/19/user/1226115).
+- Наставник: `Иван Кривонос (https://htmlacademy.ru/profile/id1311037)`.
 
 ---
 
