@@ -1,10 +1,10 @@
-import { render } from "../render.js";
-import { RenderPosition } from "../render.js";
-import SortView from "../view/sort-view.js";
-import AddPointView from "../view/point-add-view.js";
-import EditPointView from "../view/point-edit-view.js";
-import TripListView from "../view/trip-events-view.js";
-import PointView from "../view/point-view.js";
+import { render } from '../render.js';
+import { RenderPosition } from '../render.js';
+import SortView from '../view/sort-view.js';
+import AddPointView from '../view/point-add-view.js';
+import EditPointView from '../view/point-edit-view.js';
+import TripListView from '../view/trip-events-view.js';
+import PointView from '../view/point-view.js';
 
 export default class BoardPresenter {
   tripListComponent = new TripListView();
