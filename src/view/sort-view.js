@@ -24,7 +24,7 @@ function createSortTemplate() {
     </form>`
   );
 }
-  
+
 export default class SortView {
 
   getTemplate() {

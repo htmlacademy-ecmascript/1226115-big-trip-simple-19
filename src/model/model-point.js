@@ -1,4 +1,4 @@
-import {createPoints} from '../mock/point.js'
+import {createPoints} from '../mock/point.js';
 
 export default class PointsModel {
   points = createPoints();

@@ -1,5 +1,5 @@
 import { createElement } from '../render.js';
-import {getDate, getDateTime, getDateWithoutSeconds, getDayFromDate, getTimeFromDate} from '../until.js'
+import {getDate, getDateWithoutSeconds, getDayFromDate, getTimeFromDate} from '../until.js';
 
 function renderOffers(offers) {
   let result = '';

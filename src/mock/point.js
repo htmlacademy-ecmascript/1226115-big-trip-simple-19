@@ -21,7 +21,7 @@ function generateDestination() {
     name: destinationName,
     description: descriptionName,
     pictures: createPicture(DESCRIPTION_NAME)
-  }
+  };
 }
 
 function generateOffers() {
@@ -53,9 +53,9 @@ function createPoint() {
     id: getRandom(10, 50),
     offers: createOffers(),
     type: getRandomValue(POINT_TYPES)
-  }
+  };
 }
 
-const createPoints = () => Array.from({length: getRandom(POINTS_AMOUNT.MIN, POINTS_AMOUNT.MAX)}, createPoint)
+const createPoints = () => Array.from({length: getRandom(POINTS_AMOUNT.MIN, POINTS_AMOUNT.MAX)}, createPoint);
 
 export {createPoints};

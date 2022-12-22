@@ -19,10 +19,9 @@ export default class BoardPresenter {
     render(new AddPointView(), this.boardContainer);
     // render(new EditPointView(this.pointsModel.getPoints()), this.boardContainer);
     render(this.tripListComponent, this.boardContainer);
-  
+
     for (let i = 0; i < this.boardPoints.length; i++) {
       render(new PointView(this.boardPoints[i]), this.tripListComponent.getElement());
     }
-    
   }
 }
