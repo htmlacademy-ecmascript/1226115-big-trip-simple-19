@@ -1,61 +1,33 @@
-import { getRandom } from '../until.js';
-import {POINT_TYPES, CITIES, DESCRIPTION_NAME, POINTS_AMOUNT, NAME_SERVICE} from '../const.js';
+import { getRandomArrayElement, getRandomInteger, getMultipleRandomArrayElements, getOffersByPointType } from '../until.js';
+import { MAX_OFFERS, POINTS_AMOUNT, TYPES } from '../const.js';
+import { offersByType } from './offer.js';
+import { destinations } from './destination.js';
 
-function getRandomValue(set) {
-  const MIN = 0;
-  const max = set.length - 1;
-  return set[getRandom(MIN, max)];
-}
+const generatePoint = () => {
+  const day = getRandomInteger(1,31);
+  const hour = getRandomInteger(0,23);
+  const minute = getRandomInteger(0,60);
 
-function createPicture(descriptionName) {
-  return Array.from({length: getRandom(1, 5)}, () => ({
-    src: `https://loremflickr.com/248/152?random=${getRandom(1, 100)}`,
-    description: descriptionName
-  }));
-}
+  const pointType = getRandomArrayElement(TYPES);
 
-function generateDestination() {
-  const destinationName = getRandomValue(CITIES);
-  const descriptionName = getRandomValue(DESCRIPTION_NAME);
-  return {
-    name: destinationName,
-    description: descriptionName,
-    pictures: createPicture(DESCRIPTION_NAME)
-  };
-}
+  const pointTypeOffers = getOffersByPointType(pointType, offersByType);
 
-function generateOffers() {
-  return Array.from({length: getRandom(0, 1)}, (index) => ({
-    id: index,
-    title: getRandomValue(NAME_SERVICE),
-    price: getRandom(30, 250)
-  }));
-}
+  const getOffersIds = () => getMultipleRandomArrayElements(pointTypeOffers, 0, MAX_OFFERS)
+    .map((item) => item.id);
 
-function createOffers() {
-  return Array.from({length: getRandom(1, 2)}, () => ({
-    type: getRandomValue(POINT_TYPES),
-    offers: generateOffers()
-  }));
-}
+  const getDestinationId = () => getRandomArrayElement(destinations).id;
 
-function createPoint() {
-
-  const day = getRandom(0,31);
-  const hour = getRandom(0,24);
-  const minute = getRandom(0,60);
-
-  return {
-    basePrice: getRandom(50, 1500),
+  return ({
+    basePrice: getRandomInteger(100, 1500),
     dateFrom: new Date(2022, 11, day, hour, minute),
-    dateTo: new Date(2022, 11, day + getRandom(0, 1), hour + getRandom(0, 24, minute + getRandom(0, 60))),
-    destination: generateDestination(),
-    id: getRandom(10, 50),
-    offers: createOffers(),
-    type: getRandomValue(POINT_TYPES)
-  };
-}
+    dateTo: new Date(2022, 11, day + getRandomInteger(0, 1), hour + getRandomInteger(0, 12, minute + getRandomInteger(0, 30))),
+    destination: getDestinationId(),
+    id: getRandomInteger(10, 50),
+    offers: getOffersIds(),
+    type: pointType
+  });
+};
 
-const createPoints = () => Array.from({length: getRandom(POINTS_AMOUNT.MIN, POINTS_AMOUNT.MAX)}, createPoint);
+const generatePoints = () => Array.from({length: getRandomInteger(POINTS_AMOUNT.MIN, POINTS_AMOUNT.MAX)}, generatePoint);
 
-export {createPoints};
+export { generatePoints };

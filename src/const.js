@@ -1,15 +1,3 @@
-const POINT_TYPES = [
-  'taxi',
-  'bus',
-  'train',
-  'ship',
-  'drive',
-  'flight',
-  'check-in',
-  'sightseeing',
-  'restaurant'
-];
-
 const CITIES = [
   'Amsterdam',
   'Las Vegas',
@@ -30,25 +18,19 @@ const DESCRIPTION_NAME = [
   'Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
 ];
 
+const TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+
 const POINTS_AMOUNT = {
   MIN: 3,
   MAX: 6
 };
 
-const NAME_SERVICE = [
-  'Upgrade to a business class',
-  'a quick smoke',
-  'give advice',
-  'steal a towel',
-  'break the dishes',
-  'Lunch in city',
-  'Add luggage',
-  'Switch to comfort'
-];
+const MAX_OFFERS = 3;
+const MAX_PICTURES = 5;
 
-const HOUR_MINUTES_COUNT = 60;
-const TOTAL_DAY_MINUTES_COUNT = 1440;
+const DATE_TOPIC_FORMAT = 'D MMM';
 const DATE_FORMAT = 'YYYY-MM-DD';
-const DATE_TIME_FORMAT = 'DD/MM/YY hh:mm';
+const MINUTES_FORMAT = 'HH:MM';
+const DATE_EDIT_FORMAT = 'DD/MM/YY';
 
-export {POINT_TYPES, CITIES, DESCRIPTION_NAME, POINTS_AMOUNT, HOUR_MINUTES_COUNT, TOTAL_DAY_MINUTES_COUNT, DATE_FORMAT, DATE_TIME_FORMAT, NAME_SERVICE};
+export { MAX_OFFERS, TYPES, MAX_PICTURES, CITIES, DESCRIPTION_NAME, POINTS_AMOUNT, DATE_FORMAT, DATE_TOPIC_FORMAT, MINUTES_FORMAT, DATE_EDIT_FORMAT};

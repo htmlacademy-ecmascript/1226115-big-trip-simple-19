@@ -1,34 +1,36 @@
-import {createElement} from '../render.js';
-import {getPairsFromMap} from '../until.js';
+import { createElement } from '../render.js';
 
-const SORT_TYPES = new Map([
-  ['day', {label: 'Day', checked: true}],
-  ['event', {label: 'Event', checked: false}],
-  ['time', {label: 'Time', checked: false}],
-  ['price', {label: 'Price', checked: false}],
-  ['offer', {label: 'Offers', checked: false}]
-]);
+const createSortItemTemplate = (item, label, isChecked = false, isDisabled = true,) => {
+  const handleDisabledClass = (disabledFlag) => disabledFlag
+    ? 'disabled'
+    : '';
 
-
-function createSortTemplate() {
-  const sortTypes = getPairsFromMap(SORT_TYPES);
-
-  const isChecked = (typeSort) => (typeSort) ? 'checked' : 'disabled';
+  const handleCheckedClass = (checkedFlag) => checkedFlag
+    ? 'checked'
+    : '';
 
   return (
-    `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
-    ${sortTypes.map(([key, value]) => `<div class="trip-sort__item  trip-sort__item--${key}">
-          <input id="sort-${key}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${key}" ${isChecked(value.checked)}>
-          <label class="trip-sort__btn" for="sort-${key}">${value.label}</label>
-        </div>`).join('\n')}
-    </form>`
+    `<div class="trip-sort__item  trip-sort__item--${item}">
+  <input id="sort-${item}" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-${item}" ${handleCheckedClass(isChecked)} ${handleDisabledClass(isDisabled)}>
+  <label class="trip-sort__btn" for="sort-${item}">${label}</label>
+</div>`
   );
-}
+};
+
+const createTemplate = () => (
+  `<form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+    ${createSortItemTemplate('day', 'Day', true, false)}
+    ${createSortItemTemplate('event', 'Event')}
+    ${createSortItemTemplate('time', 'Time')}
+    ${createSortItemTemplate('price', 'Price', false, false)}
+    ${createSortItemTemplate('offer', 'Offers')}
+  </form>`
+);
 
 export default class SortView {
 
   getTemplate() {
-    return createSortTemplate();
+    return createTemplate();
   }
 
   getElement() {
