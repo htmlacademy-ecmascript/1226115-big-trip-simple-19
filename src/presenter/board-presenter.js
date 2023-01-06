@@ -33,7 +33,7 @@ export default class BoardPresenter {
     this.#destinations = [...this.#destinationsModel.destinations];
     this.#offers = [...this.#offersModel.offers];
 
-     if (this.#points.length < 1) {
+    if (this.#points.length < 1) {
       render(new ListEmptyView(), this.#boardContainer);
       return;
     }
