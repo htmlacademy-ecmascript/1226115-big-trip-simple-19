@@ -56,20 +56,6 @@ export default class BoardPresenter {
       }
     };
 
-    const newPoint = new PointView({...pointData, 
-      handleExpandButtonClick: () => {
-        replacePointToForm.call(this);
-        document.addEventListener('keydown', escKeydownHandler);
-      }
-    });
-
-    const newEditPoint = new PointEditView({...pointData, 
-      handleSubmitForm: () => {
-        replaceFormToPoint.call(this);
-        document.removeEventListener('keydown', escKeydownHandler);
-      }
-    });
-
     const escKeydownHandler = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
@@ -77,6 +63,20 @@ export default class BoardPresenter {
         document.removeEventListener('keydown', escKeydownHandler);
       }
     };
+
+    const newPoint = new PointView({...pointData,
+      handleExpandButtonClick: () => {
+        replacePointToForm.call(this);
+        document.addEventListener('keydown', escKeydownHandler);
+      }
+    });
+
+    const newEditPoint = new PointEditView({...pointData,
+      handleSubmitForm: () => {
+        replaceFormToPoint.call(this);
+        document.removeEventListener('keydown', escKeydownHandler);
+      }
+    });
 
     function replacePointToForm() {this.#tripEventsList.element.replaceChild(newEditPoint.element, newPoint.element);}
     function replaceFormToPoint() {this.#tripEventsList.element.replaceChild(newPoint.element, newEditPoint.element);}

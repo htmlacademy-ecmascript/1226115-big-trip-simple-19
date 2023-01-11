@@ -1,4 +1,4 @@
-import AbstractView from "../framework/view/abstract-view";
+import AbstractView from '../framework/view/abstract-view';
 
 const createSortItemTemplate = (item, label, isChecked = false, isDisabled = true,) => {
   const handleDisabledClass = (disabledFlag) => disabledFlag
