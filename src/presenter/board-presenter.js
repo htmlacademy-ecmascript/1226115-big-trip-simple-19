@@ -1,5 +1,5 @@
-import { render, RenderPosition } from '../framework/render.js';
-import { getOffersByPointType } from '../until.js';
+import { render, RenderPosition, replace } from '../framework/render.js';
+import { getOffersByPointType } from '../untils/common.js';
 import TripEventsListView from '../view/trip-events-view.js';
 import PointView from '../view/point-view.js';
 import PointEditView from '../view/point-edit-view.js';
@@ -71,15 +71,23 @@ export default class BoardPresenter {
       }
     });
 
-    const newEditPoint = new PointEditView({...pointData,
+    const newEditPoint = new PointEditView({... pointData,
       handleSubmitForm: () => {
+        replaceFormToPoint.call(this);
+      },
+      handleRollupButtonClick: () => {
         replaceFormToPoint.call(this);
         document.removeEventListener('keydown', escKeydownHandler);
       }
     });
 
-    function replacePointToForm() {this.#tripEventsList.element.replaceChild(newEditPoint.element, newPoint.element);}
-    function replaceFormToPoint() {this.#tripEventsList.element.replaceChild(newPoint.element, newEditPoint.element);}
+    function replacePointToForm() {
+      replace(newEditPoint, newPoint);
+    }
+
+    function replaceFormToPoint() {
+      replace(newPoint, newEditPoint);
+    }
 
     render(newPoint, this.#tripEventsList.element);
   }

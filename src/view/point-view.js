@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { capitalize, humanizeDate, humanizeMinutes, humanizeTopicDate } from '../until.js';
+import { capitalize, humanizeDate, humanizeMinutes, humanizeTopicDate } from '../untils/common.js';
 
 const NO_OFFERS_TEMPLATE = (
   `<li class="event__offer">
