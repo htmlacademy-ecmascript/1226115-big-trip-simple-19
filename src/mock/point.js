@@ -1,7 +1,8 @@
-import { getRandomArrayElement, getRandomInteger, getMultipleRandomArrayElements, getOffersByPointType } from '../until.js';
+import { getRandomArrayElement, getRandomInteger, getMultipleRandomArrayElements } from '../until.js';
 import { MAX_OFFERS, POINTS_AMOUNT, TYPES } from '../const.js';
 import { offersByType } from './offer.js';
 import { destinations } from './destination.js';
+import { getOffersByPointType } from '../untils/common.js';
 
 const generatePoint = () => {
   const day = getRandomInteger(1,31);
