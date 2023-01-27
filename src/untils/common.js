@@ -31,4 +31,30 @@ const updateItem = (items, update) => {
   items.map((item) => item.id === update.id ? update : item);
 };
 
-export {humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem};
+const getWeightForNullValue = (valueA, valueB) => {
+  if (valueA === null && valueB === null) {
+    return 0;
+  }
+
+  if (valueA === null) {
+    return 1;
+  }
+
+  if (valueB === null) {
+    return -1;
+  }
+
+  return null;
+};
+
+const sortByDay = (pointA, pointB) => {
+  const weight = getWeightForNullValue(pointA, pointB);
+  return weight ?? dayjs(pointA.dateFrom).diff(dayjs(pointB.dateFrom));
+};
+
+const sortByPrice = (pointA, pointB) => {
+  const weight = getWeightForNullValue(pointA, pointB);
+  return weight ?? pointB.basePrice - pointA.basePrice;
+};
+
+export {humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem, sortByDay, sortByPrice};

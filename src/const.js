@@ -33,4 +33,9 @@ const FilterType = {
   FUTURE: 'future'
 };
 
-export { MAX_OFFERS, TYPES, MAX_PICTURES, CITIES, DESCRIPTION_NAME, POINTS_AMOUNT, FilterType};
+const SortType = {
+  DAY: 'day',
+  PRICE: 'price'
+};
+
+export { MAX_OFFERS, TYPES, MAX_PICTURES, CITIES, DESCRIPTION_NAME, POINTS_AMOUNT, FilterType, SortType};
