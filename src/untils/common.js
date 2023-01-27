@@ -27,4 +27,8 @@ const capitalize = (text) => text
 
 const getOffersByPointType = (pointType, offersByType) => offersByType.find((offer) => offer.type === pointType).offers;
 
-export {humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType};
+const updateItem = (items, update) => {
+  items.map((item) => item.id === update.id ? update : item);
+};
+
+export {humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem};

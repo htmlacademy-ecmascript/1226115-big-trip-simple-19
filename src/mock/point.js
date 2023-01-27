@@ -3,6 +3,7 @@ import { MAX_OFFERS, POINTS_AMOUNT, TYPES } from '../const.js';
 import { offersByType } from './offer.js';
 import { destinations } from './destination.js';
 import { getOffersByPointType } from '../untils/common.js';
+import { nanoid } from 'nanoid';
 
 const generatePoint = () => {
   const day = getRandomInteger(1,31);
@@ -20,10 +21,10 @@ const generatePoint = () => {
 
   return ({
     basePrice: getRandomInteger(100, 1500),
-    dateFrom: new Date(2022, 11, day, hour, minute),
-    dateTo: new Date(2022, 11, day + getRandomInteger(0, 1), hour + getRandomInteger(0, 12, minute + getRandomInteger(0, 30))),
+    dateFrom: new Date(2023, 0, day, hour, minute),
+    dateTo: new Date(2023, getRandomInteger(0, 1), day + getRandomInteger(0, 1), hour + getRandomInteger(0, 12, minute + getRandomInteger(0, 30))),
     destination: getDestinationId(),
-    id: getRandomInteger(10, 50),
+    id: nanoid(),
     offers: getOffersIds(),
     type: pointType
   });
