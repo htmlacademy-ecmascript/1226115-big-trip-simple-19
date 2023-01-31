@@ -15,15 +15,13 @@ export default class PointPresenter {
   #handleDataChange = null;
   #handleModeChange = null;
   #mode = Mode.DEFAULT;
-  #getDestinationById = null;
   #getOffersByPointType = null;
   #allDestinations = [];
 
-  constructor({pointsListContainer, onDataChange, onModeChange, getDestinationById, allDestinations, getOffersByPointType}) {
+  constructor({pointsListContainer, onDataChange, onModeChange, allDestinations, getOffersByPointType}) {
     this.#pointsListContainer = pointsListContainer;
     this.#handleDataChange = onDataChange;
     this.#handleModeChange = onModeChange;
-    this.#getDestinationById = getDestinationById;
     this.#getOffersByPointType = getOffersByPointType;
     this.#allDestinations = allDestinations;
   }
@@ -80,12 +78,14 @@ export default class PointPresenter {
   #replacePointToForm() {
     replace(this.#newEditPoint, this.#newPoint);
     this.#mode = Mode.EDITING;
+    this.#newEditPoint.setDatepickers();
     document.addEventListener('keydown', this.#escKeydownHandler);
   }
 
   #replaceFormToPoint() {
     replace(this.#newPoint, this.#newEditPoint);
     this.#mode = Mode.DEFAULT;
+    this.#newEditPoint.destroyDatepickers();
     document.removeEventListener('keydown', this.#escKeydownHandler);
   }
 

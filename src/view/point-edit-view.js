@@ -1,6 +1,9 @@
 import { TYPES } from '../const.js';
 import AbstractVieStatefulw from '../framework/view/abstract-stateful-view.js';
 import { capitalize, humanizeMinutes, humanizeEditDate } from '../untils/common.js';
+import flatpickr from 'flatpickr';
+
+import 'flatpickr/dist/flatpickr.min.css';
 
 const BLANK_POINT = {
   basePrice: '',
@@ -143,6 +146,8 @@ export default class PointEditView extends AbstractVieStatefulw {
   #handleRollupButtonClick = null;
   #getOffersByPointType = null;
   #allDestinations = [];
+  #startTimeDatepicker = null;
+  #endTimeDatepicker = null;
 
   constructor ({point = BLANK_POINT, handleSubmitForm, handleRollupButtonClick, allDestinations,
     getOffersByPointType} = {}) {
@@ -154,6 +159,59 @@ export default class PointEditView extends AbstractVieStatefulw {
 
     this._setState(PointEditView.parsePointToState(point, this.#getDestinationById, this.#getOffersByPointType, this.#allDestinations));
     this._restoreHandlers();
+  }
+
+  setDatepickers() {
+    this.#setStartTimeDatepicker();
+    this.#setEndTimeDatepicker();
+  }
+
+  #setStartTimeDatepicker() {
+    this.#startTimeDatepicker = flatpickr(
+      this.element.querySelector('[name = "event-start-time"]'),
+      {
+        dateFormat: 'd/m/y H:i',
+        enableTime: true,
+        'time_24hr': true,
+        defaultDate: this._state.dateFrom,
+        onChange: this.#startTimeChangeHandler
+      }
+    );
+  }
+
+  #setEndTimeDatepicker() {
+    this.#endTimeDatepicker = flatpickr(
+      this.element.querySelector('[name = "event-end-time"]'),
+      {
+        dateFormat: 'd/m/y H:i',
+        enableTime: true,
+        'time_24hr': true,
+        minDate: this._state.dateFrom,
+        defaultDate: this._state.dateTo,
+        onChange: this.#endTimeChangeHandler
+      }
+    );
+  }
+
+  #startTimeChangeHandler = ([time]) => {
+    this.updateElement({
+      dateFrom: time
+    });
+  };
+
+  #endTimeChangeHandler = ([time]) => {
+    this.updateElement({
+      dateTo: time
+    });
+  };
+
+  destroyDatepickers() {
+    if (this.#startTimeDatepicker && this.#endTimeDatepicker) {
+      this.#startTimeDatepicker.destroy();
+      this.#startTimeDatepicker = null;
+      this.#endTimeDatepicker.destroy();
+      this.#endTimeDatepicker = null;
+    }
   }
 
   get template() {
