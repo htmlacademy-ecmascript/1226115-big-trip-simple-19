@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter.js';
 
 const DATE_TOPIC_FORMAT = 'D MMM';
 const DATE_FORMAT = 'YYYY-MM-DD';
@@ -57,4 +58,11 @@ const sortByPrice = (pointA, pointB) => {
   return weight ?? pointB.basePrice - pointA.basePrice;
 };
 
-export {humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem, sortByDay, sortByPrice};
+const isPlannedDate = (date) => {
+  dayjs.extend(isSameOrAfter);
+  return dayjs(date).isSameOrAfter(dayjs(), 'D');
+};
+
+const isDateEqual = (dateA, dateB) => dayjs(dateA).isSame(dateB, 'D');
+
+export { isDateEqual, isPlannedDate, humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem, sortByDay, sortByPrice };

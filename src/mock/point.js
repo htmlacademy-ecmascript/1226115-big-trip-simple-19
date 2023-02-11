@@ -1,8 +1,8 @@
-import { getRandomArrayElement, getRandomInteger, getMultipleRandomArrayElements } from '../until.js';
+import { getRandomArrayElement, getRandomInteger, getMultipleRandomArrayElements } from '../util.js';
 import { MAX_OFFERS, POINTS_AMOUNT, TYPES } from '../const.js';
 import { offersByType } from './offer.js';
 import { destinations } from './destination.js';
-import { getOffersByPointType } from '../untils/common.js';
+import { getOffersByPointType } from '../utils/common.js';
 import { nanoid } from 'nanoid';
 
 const generatePoint = () => {
@@ -21,8 +21,8 @@ const generatePoint = () => {
 
   return ({
     basePrice: getRandomInteger(100, 1500),
-    dateFrom: new Date(2023, 0, day, hour, minute),
-    dateTo: new Date(2023, getRandomInteger(0, 1), day + getRandomInteger(0, 1), hour + getRandomInteger(0, 12, minute + getRandomInteger(0, 30))),
+    dateFrom: new Date(2023, getRandomInteger(0, 1), day, hour, minute),
+    dateTo: new Date(2023, getRandomInteger(1, 2), day + getRandomInteger(0, 1), hour + getRandomInteger(0, 12, minute + getRandomInteger(0, 30))),
     destination: getDestinationId(),
     id: nanoid(),
     offers: getOffersIds(),

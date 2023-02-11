@@ -1,4 +1,4 @@
-import { getMultipleRandomArrayElements, getRandomArrayElement, getRandomInteger } from '../until.js';
+import { getMultipleRandomArrayElements, getRandomArrayElement, getRandomInteger } from '../util.js';
 import { MAX_PICTURES, DESCRIPTION_NAME, CITIES } from '../const.js';
 
 const generatePicture = () => ({
