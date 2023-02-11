@@ -1,4 +1,4 @@
-import { getRandomInteger } from '../until.js';
+import { getRandomInteger } from '../util.js';
 
 const offersByType = [
   {
