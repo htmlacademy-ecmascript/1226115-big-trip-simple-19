@@ -35,7 +35,6 @@ export default class NewPointPresenter {
       allDestinations: this.#allDestinations,
       getOffersByPointType: this.#getOffersByPointType,
     });
-
     render(this.#pointEditComponent, this.#boardContainer.querySelector('.trip-events__list'), RenderPosition.AFTERBEGIN);
 
     document.addEventListener('keydown', this.#escKeyDownHandler);

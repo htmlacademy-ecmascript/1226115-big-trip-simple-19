@@ -9,6 +9,7 @@ import NewPointPresenter from './new-point-presenter.js';
 import { filter } from '../utils/filter.js';
 import LoadingView from '../view/loading-view.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
+import NoAdditionalDataView from '../view/no-additional-data-view.js';
 
 const TimeLimit = {
   LOWER: 350,
@@ -23,6 +24,7 @@ export default class BoardPresenter {
   #filterType = FilterType.EVERYTHING;
   #tripEventsListComponent = new TripEventsListView();
   #loadingComponent = new LoadingView();
+  #noAdditionalDataComponent = null;
   #noPointsComponent = null;
   #sortComponent = null;
   #pointPresenters = new Map ();
@@ -76,18 +78,21 @@ export default class BoardPresenter {
     this.#renderBoard();
   }
 
-  createTask() {
+  createPoint() {
     this.#currentSortType = SortType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
     this.#newPointPresenter = new NewPointPresenter({
       boardContainer: this.#boardContainer,
       onDataChange: this.#handleViewAction,
-      onDestroy: this.#onNewPointDestroy,
+      onDestroy: this.#handleNewPointDestroy,
       allDestinations: this.destinations,
       getOffersByPointType: this.#getOffersByPointType
     });
 
     this.#newPointPresenter.init();
+    if (this.#noPointsComponent) {
+      remove(this.#noPointsComponent);
+    }
   }
 
   #renderPoint(point) {
@@ -124,19 +129,30 @@ export default class BoardPresenter {
     render(this.#loadingComponent, this.#boardContainer, RenderPosition.BEFOREBEGIN);
   }
 
-  #renderBoard() {
+  #renderEventsListComponent() {
+    render(this.#tripEventsListComponent, this.#boardContainer);
+  }
+
+  #renderBoard(isAllDataRecieved = true) {
+    if (!isAllDataRecieved) {
+      this.#noAdditionalDataComponent = new NoAdditionalDataView;
+      render(this.#noAdditionalDataComponent, this.#boardContainer);
+      return;
+    }
+
     if (this.#isLoading) {
       this.#renderLoading();
       return;
     }
 
     if (this.points.length < 1) {
+      this.#renderEventsListComponent();
       this.#renderNoPoints();
       return;
     }
 
     this.#renderSort();
-    render(this.#tripEventsListComponent, this.#boardContainer);
+    this.#renderEventsListComponent();
     this.points.forEach((point) => this.#renderPoint(point));
   }
 
@@ -155,12 +171,20 @@ export default class BoardPresenter {
       remove(this.#noPointsComponent);
     }
 
+    if (this.#noAdditionalDataComponent) {
+      remove(this.#noAdditionalDataComponent);
+    }
+
     if (resetSortType) {
       this.#currentSortType = SortType.DAY;
     }
   }
 
-  #getOffersByPointType = (pointType) => getOffersByPointType(pointType, this.offers);
+  #getOffersByPointType = (pointType) => {
+    if (this.offers.length > 0) {
+      return getOffersByPointType(pointType, this.offers);
+    }
+  };
 
   #handleViewAction = async (actionType, updateType, update) => {
     this.#uiBlocker.block();
@@ -211,7 +235,7 @@ export default class BoardPresenter {
       case UpdateType.INIT:
         this.#isLoading = false;
         remove(this.#loadingComponent);
-        this.#renderBoard();
+        this.#renderBoard(data);
         break;
     }
   };
@@ -232,5 +256,14 @@ export default class BoardPresenter {
     this.#currentSortType = sortType;
     this.#clearBoard();
     this.#renderBoard();
+  };
+
+  #handleNewPointDestroy = () => {
+    this.#onNewPointDestroy();
+
+    if (this.points.length < 1) {
+      this.#renderEventsListComponent();
+      this.#renderNoPoints();
+    }
   };
 }

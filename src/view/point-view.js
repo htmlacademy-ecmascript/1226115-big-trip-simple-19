@@ -1,3 +1,4 @@
+import he from 'he';
 import AbstractView from '../framework/view/abstract-view.js';
 import { capitalize, humanizeDate, humanizeMinutes, humanizeTopicDate } from '../utils/common.js';
 
@@ -9,7 +10,7 @@ const NO_OFFERS_TEMPLATE = (
 
 const createOfferTemplate = (offer) => (
   `<li class="event__offer">
-          <span class="event__offer-title">${offer.title}</span>
+          <span class="event__offer-title">${he.encode(offer.title)}</span>
           &plus;&euro;&nbsp;
           <span class="event__offer-price">${offer.price}</span>
         </li>`
@@ -43,7 +44,7 @@ const createTemplate = (point) => {
       <div class="event__type">
         <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
       </div>
-      <h3 class="event__title">${capitalize(type)} ${destinationData.name}</h3>
+      <h3 class="event__title">${capitalize(type)} ${he.encode(destinationData.name)}</h3>
       <div class="event__schedule">
         <p class="event__time">
           <time class="event__start-time" datetime="${humanizeDate(dateFrom)}T${humanizeMinutes(dateFrom)}">${humanizeMinutes(dateFrom)}</time>
@@ -69,11 +70,17 @@ const createTemplate = (point) => {
 export default class PointView extends AbstractView {
   #point = null;
   #handleExpandButtonClick = null;
-  #getOffersByPointType = null;
   #allDestinations = null;
+  #getOffersByPointType = null;
 
-  constructor ({point, handleExpandButtonClick, allDestinations, getOffersByPointType}) {
+  constructor ({
+    point,
+    handleExpandButtonClick,
+    allDestinations,
+    getOffersByPointType
+  }) {
     super();
+
     this.#handleExpandButtonClick = handleExpandButtonClick;
     this.#allDestinations = allDestinations;
     this.#getOffersByPointType = getOffersByPointType;
