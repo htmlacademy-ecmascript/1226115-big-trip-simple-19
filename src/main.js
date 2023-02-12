@@ -4,11 +4,17 @@ import DataModel from './model/model-data.js';
 import FilterModel from './model/model-filter.js';
 import NewTripButtonView from './view/new-trip-button-view.js';
 import FilterPresenter from './presenter/filter-presenter.js';
+import DataApiService from './data-api-service.js';
+
+const AUTHORIZATION = 'Basic rfD1A6tsmG';
+const END_POINT = 'https://19.ecmascript.pages.academy/big-trip-simple';
 
 const siteBodyElement = document.querySelector('.page-body');
 const tripMainElement = siteBodyElement.querySelector('.trip-main');
 const tripEventsContainerElement = siteBodyElement.querySelector('.trip-events');
-const dataModel = new DataModel();
+const dataModel = new DataModel({
+  dataApiService: new DataApiService(END_POINT, AUTHORIZATION)
+});
 const filterModel = new FilterModel();
 const newPointButton = new NewTripButtonView({
   onClick: handleNewPointButtonClick
@@ -35,5 +41,6 @@ function handleNewPointFormClose() {
 }
 
 filterPresenter.init();
-render(newPointButton, tripMainElement);
 boardPresenter.init();
+dataModel.init()
+  .finally(() => {render(newPointButton, tripMainElement);});

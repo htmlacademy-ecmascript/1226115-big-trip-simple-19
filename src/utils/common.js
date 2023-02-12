@@ -63,6 +63,11 @@ const isPlannedDate = (date) => {
   return dayjs(date).isSameOrAfter(dayjs(), 'D');
 };
 
-const isDateEqual = (dateA, dateB) => dayjs(dateA).isSame(dateB, 'D');
+const isDateEqual = (dateA, dateB) => dayjs(dateA).isSame(dayjs(dateB));
 
-export { isDateEqual, isPlannedDate, humanizeTopicDate, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem, sortByDay, sortByPrice };
+const isStartDateNotBiggerFinish = (startDate, finishDate) => {
+  dayjs.extend(isSameOrAfter);
+  return dayjs(finishDate).isSameOrAfter(dayjs(startDate));
+};
+
+export { isDateEqual, isPlannedDate, humanizeTopicDate, isStartDateNotBiggerFinish, humanizeDate, humanizeMinutes, humanizeEditDate, capitalize, getOffersByPointType, updateItem, sortByDay, sortByPrice };
